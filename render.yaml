@@ -9,7 +9,7 @@ services:
   - type: web
     name: synapse-buildos
     runtime: docker
-    plan: starter
+    plan: free
     region: singapore
     dockerfilePath: ./docker/synapse.Dockerfile
     dockerContext: .
@@ -17,14 +17,9 @@ services:
     autoDeploy: true
     envVars:
       - key: SYNAPSE_DATABASE_URL
-        fromDatabase:
-          name: synapse-db
-          property: connectionString
-      # Signs the session tokens. Generated once, then kept — regenerating it
-      # signs everyone out.
+        value: postgresql://postgres:dx+eh37f&z-hwWh@db.pqmfhdwreyjetzyaeeph.supabase.co:5432/postgres
       - key: SYNAPSE_JWT_SECRET
         generateValue: true
-      # Same-origin deployment: the browser never makes a cross-origin call.
       - key: SYNAPSE_CORS_ORIGINS
         value: ""
       - key: ANTHROPIC_API_KEY
